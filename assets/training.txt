@@ -1,0 +1,1 @@
+In the first stage, the connector is primarily trained to align style and glyph features. In the second stage, the connector and DiT are jointly trained. In the third stage, the OGR loss is introduced and training proceeds on the video dataset.

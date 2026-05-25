@@ -1,0 +1,7 @@
+Visual text editing aims to precisely modify text in images or videos while preserving stylistic consistency and visual realism. 
+Despite significant advances in image text editing, video text editing remains largely unexplored, facing challenges in cross-frame accuracy, temporal coherence, and stylistic fidelity. 
+In this paper, we introduce STEER, a unified framework that \textbf{steers} a frozen video diffusion model to perform precise video text editing through stylized glyph control. 
+STEER employs a frozen dual-branch diffusion transformer with a lightweight text context adapter that decomposes the editing signal into two orthogonal streams: a style encoder capturing the original text's visual attributes, and a dual-granularity glyph encoder encoding the target text content. 
+To overcome the weak text rendering capability of video foundation models, we propose an ocr-guided region reweighting loss and a three-stage progressive training strategy.
+To support large-scale training, we also develop a fully automatic data synthesis pipeline and construct STEER-1M, a dataset of one million triples spanning diverse scenes, fonts, and stylistic effects.
+Both quantitative and qualitative experiments show that STEER achieves state-of-the-art performance, outperforming both open-source baselines and the commercial model Seedance 2.0.
