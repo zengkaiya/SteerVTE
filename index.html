@@ -1,609 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SteerVTE: Precise Video Text Editing with Style and Glyph Control</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <link rel="stylesheet" href="static/css/bulma.min.css">
+    <link rel="stylesheet" href="static/css/academicons.min.css">
+    <link rel="stylesheet" href="static/css/index.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="static/css/custom.css">
+    <link rel="icon" href="./static/images/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --ours-color: #e11d48;
-            --text-main: #1f2937;
-            --text-secondary: #64748b;
-            --bg-color: #ffffff;
-            --bg-alt: #f8fafc;
-            --border-color: #e2e8f0;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: var(--text-main);
-            margin: 0;
-            background-color: var(--bg-color);
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* --- Header --- */
-        header {
-            text-align: center;
-            padding: 80px 0 60px;
-            border-bottom: 1px solid var(--border-color);
-            background: #fff;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-            color: #0f172a;
-            letter-spacing: -0.02em;
-        }
-
-        .authors {
-            font-size: 1.3rem; 
-            color: var(--text-main); 
-            font-weight: 500;
-            margin-top: 20px;
-        }
-
-        .authors a {
-            color: var(--text-main);
-            text-decoration: none;
-            position: relative;
-        }
-
-        .authors a:hover {
-            color: var(--primary-color);
-            text-decoration: underline;
-        }
-
-        .affiliations {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            font-weight: 400;
-            margin-top: 10px;
-        }
-
-        .link-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 25px; 
-            margin-bottom: 10px;
-        }
-
-        /* --- 按钮主体 --- */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px 22px;
-            background-color: #1f2937; 
-            color: #fff;
-            text-decoration: none;
-            border-radius: 30px; 
-            font-size: 1rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            border: 1px solid transparent;
-        }
-
-        .btn:hover {
-            background-color: #374151; 
-            transform: translateY(-2px); 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        .icon {
-            width: 18px;
-            height: 18px;
-            margin-right: 8px;
-        }
-        
-        /* --- Section Styling --- */
-        section { padding: 60px 0; }
-        #abstract { background: #f8fafc; }
-        #method { background: #fff; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
-        #comparisons { background: #f8fafc; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
-        h2 {
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 40px;
-            font-weight: 800;
-            color: #1e293b;
-        }
-
-        h3 {
-            font-size: 1.5rem;
-            text-align: left;
-            margin-bottom: 25px;
-            font-weight: 600;
-            color: #334155;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        h3::before {
-            content: ''; display: block; width: 6px; height: 24px; background: var(--primary-color); border-radius: 2px;
-        }
-
-        h4 {
-            font-size: 1.15rem;
-            color: #475569;
-            margin: 32px 0 20px;
-            font-weight: 700;
-        }
-
-        .subsection-description {
-            margin-bottom: 30px;
-            color: var(--text-secondary);
-            font-size: 1rem;
-        }
-        .zoom-tip {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 6px 12px;
-            border-radius: 999px;
-            border: 1px solid #f59e0b;
-            background: #fffbeb;
-            color: #b45309;
-            font-weight: 700;
-            font-size: 0.95rem;
-        }
-
-        .subsection-divider {
-            border: 0; height: 1px; background: #cbd5e1; margin: 60px 0; opacity: 0.5;
-        }
-
-        .abstract-content {
-            max-width: 820px;
-            margin: 0 auto;
-            text-align: justify;
-            font-size: 1.05rem;
-            color: #475569;
-        }
-
-        .method-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 30px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .method-item {
-            background: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-shadow: var(--shadow-sm);
-            padding: 16px;
-        }
-
-        .method-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            background: #fff;
-        }
-
-        .method-caption {
-            margin-top: 14px;
-            font-size: 1rem;
-            color: #475569;
-            text-align: justify;
-        }
-
-        .method-caption-stack {
-            max-width: 1100px;
-            margin: 22px auto 0;
-            display: grid;
-            gap: 14px;
-        }
-
-        .method-caption-item {
-            background: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            box-shadow: var(--shadow-sm);
-            padding: 16px 18px;
-            font-size: 1rem;
-            color: #475569;
-            text-align: justify;
-        }
-
-        .method-caption-title {
-            margin: 0 0 10px 0;
-            font-size: 1.08rem;
-            font-weight: 700;
-            color: #334155;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .method-caption-title::before {
-            content: '';
-            width: 4px;
-            height: 18px;
-            border-radius: 2px;
-            background: var(--primary-color);
-        }
-
-        /* --- Floating Navbar --- */
-        .nav-container {
-            position: fixed;
-            left: 18px;
-            top: 18px;
-            z-index: 1200;
-            width: 320px;
-            max-width: calc(100vw - 36px);
-            border-radius: 14px;
-            border: 1px solid rgba(148, 163, 184, 0.35);
-            background: rgba(255, 255, 255, 0.78);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.15);
-            transition: all 0.24s ease;
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(-8px);
-        }
-        .nav-container.visible {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(0);
-        }
-        .nav-container.collapsed .nav-list {
-            display: none;
-        }
-        .nav-header {
-            display: none;
-        }
-        .desktop-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 8px;
-            padding: 12px 12px 10px 12px;
-            border-bottom: 1px solid rgba(203, 213, 225, 0.45);
-        }
-        .current-section {
-            font-size: 12px;
-            font-weight: 600;
-            color: #334155;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: block;
-            flex: 1;
-        }
-        .nav-collapse {
-            border: 0;
-            background: transparent;
-            color: #334155;
-            cursor: pointer;
-            width: 30px;
-            height: 30px;
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.8;
-        }
-        .nav-collapse:hover { background: rgba(148, 163, 184, 0.14); opacity: 1; }
-        .expand-icon { display: none; }
-        .nav-container.collapsed .expand-icon { display: inline; }
-        .nav-container.collapsed .collapse-icon { display: none; }
-
-        .nav-list {
-            list-style: none;
-            margin: 0;
-            padding: 8px 8px 10px 8px;
-            max-height: min(70vh, 620px);
-            overflow-y: auto;
-        }
-        .nav-item {
-            margin: 2px 0;
-            padding: 8px 10px;
-            border-radius: 8px;
-            color: #475569;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            user-select: none;
-        }
-        .nav-item.h2 {
-            padding-left: 22px;
-            font-size: 12px;
-            font-weight: 500;
-            color: #64748b;
-        }
-        .nav-item:hover {
-            background: rgba(219, 234, 254, 0.55);
-            color: #1e3a8a;
-        }
-        .nav-item.active {
-            background: #e0ecff;
-            color: #1d4ed8;
-            font-weight: 700;
-        }
-
-        .nav-close {
-            cursor: pointer;
-            color: #334155;
-            opacity: 0.7;
-        }
-        .nav-close:hover { opacity: 1; }
-
-        /* --- Scrolling Window Logic (Comparisons) --- */
-        .comparison-block {
-            margin-bottom: 40px;
-            background: #fff;
-            padding: 20px;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-sm);
-            position: relative; 
-        }
-
-        .instruction-label { text-align: center; margin-bottom: 20px; padding-right: 40px; padding-left: 40px; }
-        .instruction-badge {
-            background: #eff6ff; color: var(--primary-color); padding: 8px 24px;
-            border-radius: 50px; font-weight: 600; font-size: 1rem;
-            display: inline-block; border: 1px solid #dbeafe;
-        }
-
-        .instruction-src { color: #0f766e; font-weight: 700; }
-        .instruction-gt { color: #b91c1c; font-weight: 700; }
-
-        .scroll-window {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding-bottom: 15px;
-            width: 100%;
-        }
-        .scroll-window::-webkit-scrollbar { height: 8px; }
-        .scroll-window::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 4px; }
-        .scroll-window::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-
-        .video-card {
-            flex: 0 0 auto; width: 220px; display: flex; flex-direction: column;
-        }
-        .video-card.ref-card { width: 180px; }
-        
-        .video-card video, .video-card img {
-            width: 100%; border-radius: 8px; display: block;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05); background: #000;
-        }
-        .video-card img { height: auto; aspect-ratio: 16/9; object-fit: cover; }
-        .video-card img.ref-portrait {
-            width: auto;
-            max-width: 100%;
-            height: 220px;
-            background: #fff;
-            object-fit: contain;
-        }
-
-        .card-header {
-            text-align: center; font-size: 0.85rem; font-weight: 600; color: #64748b; margin-bottom: 8px; white-space: nowrap;
-        }
-        .is-ours .card-header { color: var(--ours-color); font-weight: 800; }
-        .is-ours video { border: 3px solid var(--ours-color); box-shadow: 0 4px 12px rgba(225, 29, 72, 0.2); }
-
-        /* --- Video Control Button Styling --- */
-        .video-control-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 36px;
-            height: 36px;
-            background-color: rgba(255, 255, 255, 0.9);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text-main);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: all 0.2s ease;
-            z-index: 10;
-        }
-
-        .video-control-btn:hover {
-            background-color: var(--primary-color);
-            color: #fff;
-            border-color: var(--primary-color);
-        }
-
-        #dataset-visualization { background: #fff; border-top: 1px solid var(--border-color); }
-        .dataset-stage {
-            margin-top: 18px;
-            margin-bottom: 50px;
-        }
-        .dataset-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 18px;
-        }
-        .dataset-sample {
-            background: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            box-shadow: var(--shadow-sm);
-            padding: 14px;
-            position: relative;
-        }
-        .dataset-media-row {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 10px;
-        }
-        .dataset-media-item {
-            min-width: 0;
-        }
-        .dataset-media-title {
-            text-align: center;
-            font-size: 0.82rem;
-            font-weight: 700;
-            color: #64748b;
-            margin-bottom: 6px;
-        }
-        .dataset-media-item img,
-        .dataset-media-item video {
-            width: 100%;
-            display: block;
-            border-radius: 8px;
-            border: 1px solid #dbe3ef;
-            background: #000;
-            object-fit: cover;
-            aspect-ratio: 16 / 9;
-        }
-        .dataset-stage2 .dataset-media-item img,
-        .dataset-stage2 .dataset-media-item video {
-            aspect-ratio: 1 / 1;
-        }
-
-        /* --- Interactive Media Zoom --- */
-        .zoomable-media {
-            cursor: zoom-in;
-            transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
-            transform-origin: center center;
-        }
-        .zoomable-media:hover {
-            transform: translateY(-2px) scale(1.03);
-            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
-            filter: saturate(1.03);
-        }
-
-        .media-lightbox {
-            position: fixed;
-            inset: 0;
-            background: rgba(2, 6, 23, 0.82);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 30px;
-            z-index: 10000;
-        }
-        .media-lightbox.is-open { display: flex; }
-
-        .media-lightbox-content {
-            max-width: min(1200px, calc(100vw - 60px));
-            max-height: calc(100vh - 90px);
-            border-radius: 12px;
-            border: 1px solid rgba(203, 213, 225, 0.45);
-            box-shadow: 0 18px 40px rgba(2, 6, 23, 0.45);
-            background: #000;
-            display: block;
-        }
-
-        .media-lightbox-close {
-            position: absolute;
-            top: 18px;
-            right: 18px;
-            width: 42px;
-            height: 42px;
-            border: 1px solid rgba(148, 163, 184, 0.5);
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.95);
-            color: #0f172a;
-            font-size: 20px;
-            line-height: 1;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-        .media-lightbox-close:hover {
-            background: #fff;
-            transform: scale(1.05);
-        }
-
-        /* Mobile */
-        @media (max-width: 768px) {
-            h1 { font-size: 2rem; }
-            .method-grid { grid-template-columns: 1fr; }
-            .video-card { width: 200px; }
-            .dataset-grid { grid-template-columns: 1fr; }
-            .video-control-btn { width: 32px; height: 32px; font-size: 0.8rem; }
-            .media-lightbox { padding: 14px; }
-            .media-lightbox-content {
-                max-width: calc(100vw - 28px);
-                max-height: calc(100vh - 56px);
-            }
-            .media-lightbox-close {
-                top: 10px;
-                right: 10px;
-                width: 36px;
-                height: 36px;
-            }
-            .nav-container {
-                left: 10px;
-                right: 10px;
-                top: 10px;
-                width: auto;
-                max-width: none;
-            }
-            .desktop-header {
-                display: none;
-            }
-            .nav-header {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: 10px;
-                padding: 12px;
-                border-bottom: 1px solid rgba(203, 213, 225, 0.45);
-            }
-            .nav-container.collapsed .nav-list {
-                display: none;
-            }
-            .nav-container:not(.collapsed) .nav-list {
-                display: block;
-            }
-            .nav-item {
-                font-size: 14px;
-            }
-            .nav-item.h2 {
-                font-size: 13px;
-            }
-        }
-    </style>
 </head>
+
 <body>
     <nav class="nav-container has-active collapsed" id="page-nav">
         <div class="nav-header">
-            <span class="current-section">Comparison with Baselines</span>
+            <span class="current-section">Abstract</span>
             <a class="nav-close" aria-label="Close navigation"><i class="fa-solid fa-xmark"></i></a>
         </div>
         <div class="desktop-header">
-            <span class="current-section">Comparison with Baselines</span>
+            <span class="current-section">Abstract</span>
             <button class="nav-collapse" aria-label="Collapse navigation">
                 <a class="expand-icon"><i class="fa-solid fa-angle-down"></i></a>
                 <a class="collapse-icon"><i class="fa-solid fa-arrow-left-long"></i></a>
             </button>
         </div>
         <ul class="nav-list">
+            <li class="nav-item h1" data-target="abstract">Abstract</li>
+            <li class="nav-item h1" data-target="method">Method</li>
             <li class="nav-item h1" data-target="comparisons">Comparison with Baselines</li>
             <li class="nav-item h2" data-target="synthetic-scenarios">Synthetic Scenarios</li>
             <li class="nav-item h2" data-target="real-scenarios">Real Scenarios</li>
@@ -614,67 +45,172 @@
         </ul>
     </nav>
 
-    <header>
-        <div class="container">
-            <h1>SteerVTE: Seamless Video Text Editing with Style and Glyph Control</h1>
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <h1 class="title is-1 publication-title"><span
+                                class="has-text-danger has-text-weight-semibold">SteerVTE</span>: Precise Video Text Editing with Style and Glyph Control</h1>
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block">
+                                <a href="https://openreview.net/profile?id=%7EKai_Zeng7">Kai Zeng</a><sup>1,2,◇</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://moranli-aca.github.io/">Moran
+                                    Li</a><sup>2</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://scholar.google.com/citations?user=TaYR7cMAAAAJ&hl=en">Zhengwei Wang</a><sup>2</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://yingchen001.github.io/">Yingchen Yu</a><sup>2&#9824;</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://linyiheng123.github.io/">Yiheng Lin</a><sup>2,◇</sup>,
+                            </span>
+                            <br>
+                            <span class="author-block">
+                                <a href="https://arctanxarc.github.io/">Ruichuan An</a><sup>1</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://lu-m13.github.io/">Ming Lu</a><sup>1</sup>,
+                            </span>
+                            <!-- <br> -->
+                            <span class="author-block">
+                                <a href="https://qi-she.net/">Qi She</a><sup>2&clubs;</sup>,
+                            </span>
+                            <span class="author-block">
+                                <a href="https://zwt233.github.io/">Wentao Zhang</a><sup>1&#9824;</sup>
+                            </span>
+                        </div>
+                        <!-- <br> -->
+                        <!-- <div class="is-size-5 publication-authors">
+                            <span class="author-block"><b>CVPR 2026 (Main Track), Denver</b>
+                        </div> -->
+                        <!-- <br> -->
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block"><sup>1</sup>Peking University</span>&nbsp;&nbsp;
+                            <span class="author-block"><sup>2</sup>ByteDance</span>
+                            <br>
 
-            <div class="authors">Anonymous Author(s)</div>
+                            <span class="author-block"><sup>◇</sup>Intern of ByteDance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="author-block"><sup>&clubs;</sup>Projector Leader</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="author-block"><sup>&#9824;</sup>Corresponding Author</span>
+                        </div>
+
+                        <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <!-- PDF Link. -->
+                                <span class="link-block">
+                                    <a href="https://arxiv.org/abs/2512.17312"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="ai ai-arxiv"></i>
+                                        </span>
+                                        <span>Paper</span>
+                                    </a>
+                                </span>
+                                <!-- Code Link. -->
+                                <span class="link-block">
+                                    <a href="https://github.com/CodeDance-VL/CodeDance"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon">
+                                            <i class="fab fa-github"></i>
+                                        </span>
+                                        <span>Code</span>
+                                    </a>
+                                </span>
+                                <!-- SFT Dataset Link. -->
+                                <!-- <span class="link-block">
+                                    <a href="https://huggingface.co/datasets/Peterwatwec/CodeDance-SFT" target="_blank"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon"><i class="fas fa-database"></i></span>
+                                        <span>SFT Dataset</span>
+                                    </a>
+                                </span> -->
+                                <!-- RL Dataset Link. -->
+                                <!-- <span class="link-block">
+                                    <a href="https://huggingface.co/datasets/Peterwatwec/CodeDance-RL" target="_blank"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon"><i class="fas fa-database"></i></span>
+                                        <span>RL Dataset</span>
+                                    </a>
+                                </span> -->
+                                <!-- Models Link. -->
+                                <!-- <span class="link-block">
+                                    <a href="https://codedance-vl.github.io/" target="_blank"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon"><i class="fas fa-cubes"></i></span>
+                                        <span>Models</span>
+                                    </a>
+                                </span> -->
+                                <!-- Demo Link. -->
+                                <!-- <span class="link-block">
+                                    <a href="https://codedance-vl.github.io/" target="_blank"
+                                        class="external-link button is-normal is-rounded is-dark">
+                                        <span class="icon"><i class="fas fa-play-circle"></i></span>
+                                        <span>Demo</span>
+                                    </a>
+                                </span> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </header>
+    </section>
 
-    <!-- <section id="abstract">
+    <section id="abstract">
         <div class="container">
             <h2>Abstract</h2>
             <div class="abstract-content">
                 <p>
-                    Visual text editing aims to precisely modify text in images or videos while preserving stylistic consistency and visual realism.
-                    Despite significant advances in image text editing, video text editing remains largely unexplored, facing challenges in cross-frame accuracy, temporal coherence, and stylistic fidelity.
-                    In this paper, we introduce SteerVTE, a unified framework that <strong>SteerVTEs</strong> a frozen video diffusion model to perform precise video text editing through stylized glyph control.
-                    SteerVTE employs a frozen dual-branch diffusion transformer with a lightweight text context adapter that decomposes the editing signal into two orthogonal streams: a style encoder capturing the original text's visual attributes, and a dual-granularity glyph encoder encoding the target text content.
-                    To overcome the weak text rendering capability of video foundation models, we propose an OCR-guided region reweighting loss and a three-stage progressive training strategy.
-                    To support large-scale training, we also develop a fully automatic data synthesis pipeline and construct SteerVTE-1M, a dataset of one million triples spanning diverse scenes, fonts, and stylistic effects.
-                    Both quantitative and qualitative experiments show that SteerVTE achieves state-of-the-art performance, outperforming both open-source baselines and the commercial model Seedance 2.0.
+                    Visual text editing aims to precisely modify text in images and videos while preserving stylistic consistency and visual realism. 
+                    Despite significant advances in the image domain, video text editing remains largely unexplored: it is a localized task demanding stroke-level precision within small text regions, which compounds the challenges of cross-frame accuracy, temporal coherence, and stylistic fidelity. 
+                    We introduce SteerVTE, a unified framework that <b>steer</b>s a frozen video diffusion model to perform precise <b>V</b>ideo <b>T</b>ext <b>E</b>diting through style and glyph control. 
+                    Built on a frozen diffusion transformer, SteerVTE attaches a lightweight text context adapter with two complementary modules: a style encoder capturing the original text's visual attributes, and dual-granularity glyph encoders encoding the target text at both the line and character levels.
+                    To overcome the inherently weak text rendering priors of video foundation models, we further propose a glyph-aware spatial-focal loss and a three-stage progressive training curriculum that scales from image to video data.
+                    To support large-scale training, we also develop an automatic synthesis pipeline and construct SteerVTE-1M, a dataset of one million triplets spanning diverse scenes, fonts, and stylistic effects.
+                    Extensive experiments demonstrate that SteerVTE substantially outperforms existing video editing baselines across text accuracy, style consistency, and temporal coherence.
                 </p>
             </div>
         </div>
-    </section> -->
+    </section>
 
-    <!-- <section id="method">
+    <section id="method">
         <div class="container">
             <h2>Method</h2>
             <div class="method-grid">
                 <div class="method-item">
-                    <img src="assets/method.png" alt="SteerVTE method framework">
+                    <img src="static/images/overview.png" alt="SteerVTE method framework">
                 </div>
                 <div class="method-item">
-                    <img src="assets/training.png" alt="SteerVTE progressive training strategy">
+                    <img src="static/images/training.png" alt="SteerVTE progressive training strategy">
                 </div>
             </div>
             <div class="method-caption-stack">
                 <div class="method-caption-item">
                     <div class="method-caption-title">Method Overview</div>
-                    We propose SteerVTE, a framework that SteerVTEs a video diffusion model to perform accurate video text rewriting by injecting decomposed glyph and style guidance.
-                    Given a source video, mask video, source text, and target text, we construct a reference image by cropping the first source frame using the first mask frame.
-                    A style encoder extracts source style, while a glyph encoder obtains dual-granularity glyph representations from the target text.
-                    These conditions are injected via cross-attention into a Text Control Adapter, enabling precise style-preserving text editing.
-                    We also introduce an OCR-guided region reweighting loss to enhance editing on long texts and small regions.
+                    We propose SteerVTE, a framework that augments a frozen text-to-video DiT with a lightweight Text Context Adapter. The adapter injects three editing signals via cross-attention: a spatiotemporal mask for region localization, VLM-encoded style features extracted from masked-frame crops, and dual-granularity glyph features of the target text. We further introduce GLAS Loss, which combines latent-space mask reweighting with RGB-space OCR supervision to improve sentence-level consistency and fine-grained text editing quality.
                 </div>
                 <div class="method-caption-item">
                     <div class="method-caption-title">Training Strategy</div>
                     In the first stage, the connector is primarily trained to align style and glyph features.
                     In the second stage, the connector and DiT are jointly trained.
-                    In the third stage, the OGR loss is introduced and training proceeds on the video dataset.
+                    In the third stage, the GLAS loss is introduced and training proceeds on the video dataset.
                 </div>
             </div>
         </div>
-    </section> -->
+    </section>
 
     <section id="comparisons">
         <div class="container">
             <h2 style="margin-bottom: 60px;">Comparison with Baselines</h2>
             <p class="subsection-description">
                 Please scroll right to view all baselines.<br>
-                Please press the play button on the top right to pause all videos for more detailed frame-by-frame comparison.<br>
+                Please press the play button on the top right to pause all videos for more detailed frame-by-frame
+                comparison.<br>
                 Please refresh the page if the videos are not synchronized properly.<br>
                 <span class="zoom-tip">Tip: Click any image or video to zoom in.</span>
             </p>
@@ -685,7 +221,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;Suegra Wynn&#x27;s MASTITIS bernafa&quot;</span> -&gt; <span class="instruction-gt">&quot;That was totally unexpected&quot;</span>
+                            Edit: <span class="instruction-src">&quot;Suegra Wynn&#x27;s MASTITIS bernafa&quot;</span>
+                            -&gt; <span class="instruction-gt">&quot;That was totally unexpected&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -719,7 +256,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;Eye Rinitis listos A&quot;</span> -&gt; <span class="instruction-gt">&quot;I really needed that&quot;</span>
+                            Edit: <span class="instruction-src">&quot;Eye Rinitis listos A&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;I really needed that&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -757,7 +295,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;network Ginsen First&quot;</span> -&gt; <span class="instruction-gt">&quot;QUICK SMART THINKING&quot;</span>
+                            Edit: <span class="instruction-src">&quot;network Ginsen First&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;QUICK SMART THINKING&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -791,7 +330,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;EDININ JAM vanish Ti&quot;</span> -&gt; <span class="instruction-gt">&quot;I&#x27;m thinking about it&quot;</span>
+                            Edit: <span class="instruction-src">&quot;EDININ JAM vanish Ti&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;I&#x27;m thinking about it&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -829,7 +369,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;agregaste Snapchat T&quot;</span> -&gt; <span class="instruction-gt">&quot;Happy Quiet Evening&quot;</span>
+                            Edit: <span class="instruction-src">&quot;agregaste Snapchat T&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;Happy Quiet Evening&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -867,7 +408,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;FORTNITE Seriously f&quot;</span> -&gt; <span class="instruction-gt">&quot;QUICK RESPONSE TEAM&quot;</span>
+                            Edit: <span class="instruction-src">&quot;FORTNITE Seriously f&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;QUICK RESPONSE TEAM&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -907,7 +449,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;TEIL Antarctic&quot;</span> -&gt; <span class="instruction-gt">&quot;Strong Feeling&quot;</span>
+                            Edit: <span class="instruction-src">&quot;TEIL Antarctic&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;Strong Feeling&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -941,7 +484,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;ardus PUBLIC jodido Heart&quot;</span> -&gt; <span class="instruction-gt">&quot;I appreciate your honesty&quot;</span>
+                            Edit: <span class="instruction-src">&quot;ardus PUBLIC jodido Heart&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;I appreciate your honesty&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -975,7 +519,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;Qu&#x27;il Snapchat OVE ordures&quot;</span> -&gt; <span class="instruction-gt">&quot;Something seems off today&quot;</span>
+                            Edit: <span class="instruction-src">&quot;Qu&#x27;il Snapchat OVE ordures&quot;</span> -&gt;
+                            <span class="instruction-gt">&quot;Something seems off today&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1009,7 +554,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;Destiny gamitin Pepitama chat&quot;</span> -&gt; <span class="instruction-gt">&quot;Everything will be fine&quot;</span>
+                            Edit: <span class="instruction-src">&quot;Destiny gamitin Pepitama chat&quot;</span> -&gt;
+                            <span class="instruction-gt">&quot;Everything will be fine&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1043,7 +589,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;laggy nnual Baguslah seducing&quot;</span> -&gt; <span class="instruction-gt">&quot;I can&#x27;t believe this happened&quot;</span>
+                            Edit: <span class="instruction-src">&quot;laggy nnual Baguslah seducing&quot;</span> -&gt;
+                            <span class="instruction-gt">&quot;I can&#x27;t believe this happened&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1088,7 +635,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;SURFING&quot;</span> -&gt; <span class="instruction-gt">&quot;Between&quot;</span>
+                            Edit: <span class="instruction-src">&quot;SURFING&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;Between&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1114,7 +662,8 @@
                         </div>
                         <div class="video-card">
                             <div class="card-header">Kiwi-Edit</div>
-                            <video autoplay loop muted playsinline src="results/real/no_style/163/kiwi-edit.mp4"></video>
+                            <video autoplay loop muted playsinline
+                                src="results/real/no_style/163/kiwi-edit.mp4"></video>
                         </div>
                         <div class="video-card">
                             <div class="card-header">FLUX-Text (Per Frame)</div>
@@ -1126,7 +675,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;CALVI NKLEIN&quot;</span> -&gt; <span class="instruction-gt">&quot;Happy Family&quot;</span>
+                            Edit: <span class="instruction-src">&quot;CALVI NKLEIN&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;Happy Family&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1152,7 +702,8 @@
                         </div>
                         <div class="video-card">
                             <div class="card-header">Kiwi-Edit</div>
-                            <video autoplay loop muted playsinline src="results/real/no_style/168/kiwi-edit.mp4"></video>
+                            <video autoplay loop muted playsinline
+                                src="results/real/no_style/168/kiwi-edit.mp4"></video>
                         </div>
                         <div class="video-card">
                             <div class="card-header">FLUX-Text (Per Frame)</div>
@@ -1164,7 +715,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;in the comments&quot;</span> -&gt; <span class="instruction-gt">&quot;Watch your step&quot;</span>
+                            Edit: <span class="instruction-src">&quot;in the comments&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;Watch your step&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1190,7 +742,8 @@
                         </div>
                         <div class="video-card">
                             <div class="card-header">Kiwi-Edit</div>
-                            <video autoplay loop muted playsinline src="results/real/no_style/183/kiwi-edit.mp4"></video>
+                            <video autoplay loop muted playsinline
+                                src="results/real/no_style/183/kiwi-edit.mp4"></video>
                         </div>
                         <div class="video-card">
                             <div class="card-header">FLUX-Text (Per Frame)</div>
@@ -1202,7 +755,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;Gym &amp; fitness&quot;</span> -&gt; <span class="instruction-gt">&quot;I&#x27;m very busy&quot;</span>
+                            Edit: <span class="instruction-src">&quot;Gym &amp; fitness&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;I&#x27;m very busy&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1228,7 +782,8 @@
                         </div>
                         <div class="video-card">
                             <div class="card-header">Kiwi-Edit</div>
-                            <video autoplay loop muted playsinline src="results/real/no_style/205/kiwi-edit.mp4"></video>
+                            <video autoplay loop muted playsinline
+                                src="results/real/no_style/205/kiwi-edit.mp4"></video>
                         </div>
                         <div class="video-card">
                             <div class="card-header">FLUX-Text (Per Frame)</div>
@@ -1240,7 +795,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;But Benny＇s mom has&quot;</span> -&gt; <span class="instruction-gt">&quot;That&#x27;s a fair point&quot;</span>
+                            Edit: <span class="instruction-src">&quot;But Benny＇s mom has&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;That&#x27;s a fair point&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1266,7 +822,8 @@
                         </div>
                         <div class="video-card">
                             <div class="card-header">Kiwi-Edit</div>
-                            <video autoplay loop muted playsinline src="results/real/no_style/225/kiwi-edit.mp4"></video>
+                            <video autoplay loop muted playsinline
+                                src="results/real/no_style/225/kiwi-edit.mp4"></video>
                         </div>
                         <div class="video-card">
                             <div class="card-header">FLUX-Text (Per Frame)</div>
@@ -1278,7 +835,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;Contra enk incontrato&quot;</span> -&gt; <span class="instruction-gt">&quot;We should head out soon&quot;</span>
+                            Edit: <span class="instruction-src">&quot;Contra enk incontrato&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;We should head out soon&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1304,7 +862,8 @@
                         </div>
                         <div class="video-card">
                             <div class="card-header">Kiwi-Edit</div>
-                            <video autoplay loop muted playsinline src="results/real/no_style/000/kiwi-edit.mp4"></video>
+                            <video autoplay loop muted playsinline
+                                src="results/real/no_style/000/kiwi-edit.mp4"></video>
                         </div>
                         <div class="video-card">
                             <div class="card-header">FLUX-Text (Per Frame)</div>
@@ -1316,7 +875,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;I mportant Must-Have&quot;</span> -&gt; <span class="instruction-gt">&quot;We&#x27;re on the same page&quot;</span>
+                            Edit: <span class="instruction-src">&quot;I mportant Must-Have&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;We&#x27;re on the same page&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1342,7 +902,8 @@
                         </div>
                         <div class="video-card">
                             <div class="card-header">Kiwi-Edit</div>
-                            <video autoplay loop muted playsinline src="results/real/no_style/005/kiwi-edit.mp4"></video>
+                            <video autoplay loop muted playsinline
+                                src="results/real/no_style/005/kiwi-edit.mp4"></video>
                         </div>
                         <div class="video-card">
                             <div class="card-header">FLUX-Text (Per Frame)</div>
@@ -1354,7 +915,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;People were rally marking it&quot;</span> -&gt; <span class="instruction-gt">&quot;My brain stopped working today&quot;</span>
+                            Edit: <span class="instruction-src">&quot;People were rally marking it&quot;</span> -&gt;
+                            <span class="instruction-gt">&quot;My brain stopped working today&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1380,7 +942,8 @@
                         </div>
                         <div class="video-card">
                             <div class="card-header">Kiwi-Edit</div>
-                            <video autoplay loop muted playsinline src="results/real/no_style/006/kiwi-edit.mp4"></video>
+                            <video autoplay loop muted playsinline
+                                src="results/real/no_style/006/kiwi-edit.mp4"></video>
                         </div>
                         <div class="video-card">
                             <div class="card-header">FLUX-Text (Per Frame)</div>
@@ -1394,7 +957,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;PRO TIP&quot;</span> -&gt; <span class="instruction-gt">&quot;New Job&quot;</span>
+                            Edit: <span class="instruction-src">&quot;PRO TIP&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;New Job&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1432,7 +996,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;END&quot;</span> -&gt; <span class="instruction-gt">&quot;GET&quot;</span>
+                            Edit: <span class="instruction-src">&quot;END&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;GET&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1470,7 +1035,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;BEA&quot;</span> -&gt; <span class="instruction-gt">&quot;FINE&quot;</span>
+                            Edit: <span class="instruction-src">&quot;BEA&quot;</span> -&gt; <span
+                                class="instruction-gt">&quot;FINE&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1508,7 +1074,8 @@
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
-                            Edit: <span class="instruction-src">&quot;Something needs to change.&quot;</span> -&gt; <span class="instruction-gt">&quot;Something seems off today&quot;</span>
+                            Edit: <span class="instruction-src">&quot;Something needs to change.&quot;</span> -&gt;
+                            <span class="instruction-gt">&quot;Something seems off today&quot;</span>
                         </span>
                     </div>
                     <div class="scroll-window">
@@ -1556,7 +1123,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;SILVERTON trials IND&quot;</span> -&gt; <span class="instruction-gt">&quot;SLIP recite molestab&quot;</span>
+                                Edit: <span class="instruction-src">&quot;SILVERTON trials IND&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;SLIP recite molestab&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1577,7 +1145,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;workouts date ciasta&quot;</span> -&gt; <span class="instruction-gt">&quot;prazer finding jantu&quot;</span>
+                                Edit: <span class="instruction-src">&quot;workouts date ciasta&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;prazer finding jantu&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1598,7 +1167,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;Peiniger WRIGGLED Re&quot;</span> -&gt; <span class="instruction-gt">&quot;poen NASX BENEFICIOS&quot;</span>
+                                Edit: <span class="instruction-src">&quot;Peiniger WRIGGLED Re&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;poen NASX BENEFICIOS&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1619,7 +1189,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;Bronde&quot;</span> -&gt; <span class="instruction-gt">&quot;murdar m&#x27;arrive impu&quot;</span>
+                                Edit: <span class="instruction-src">&quot;Bronde&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;murdar m&#x27;arrive impu&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1640,7 +1211,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;COOPERATE ACEPTO FLE&quot;</span> -&gt; <span class="instruction-gt">&quot;Immaginavo dengannya&quot;</span>
+                                Edit: <span class="instruction-src">&quot;COOPERATE ACEPTO FLE&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;Immaginavo dengannya&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1661,7 +1233,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;MENJEMPUT ADVOGADO L&quot;</span> -&gt; <span class="instruction-gt">&quot;olhada bereute&quot;</span>
+                                Edit: <span class="instruction-src">&quot;MENJEMPUT ADVOGADO L&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;olhada bereute&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1682,7 +1255,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;ointment acreditar&quot;</span> -&gt; <span class="instruction-gt">&quot;engage crossed eppur&quot;</span>
+                                Edit: <span class="instruction-src">&quot;ointment acreditar&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;engage crossed eppur&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1703,7 +1277,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;conductores lubi MAK&quot;</span> -&gt; <span class="instruction-gt">&quot;Saures responsabilid&quot;</span>
+                                Edit: <span class="instruction-src">&quot;conductores lubi MAK&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;Saures responsabilid&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1724,7 +1299,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;homecoming&quot;</span> -&gt; <span class="instruction-gt">&quot;Coincidentally Champ&quot;</span>
+                                Edit: <span class="instruction-src">&quot;homecoming&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;Coincidentally Champ&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1745,7 +1321,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;etme apr beritahu Da&quot;</span> -&gt; <span class="instruction-gt">&quot;kuwat deber traindo&quot;</span>
+                                Edit: <span class="instruction-src">&quot;etme apr beritahu Da&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;kuwat deber traindo&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1766,7 +1343,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;DOLDURMAN Crash mele&quot;</span> -&gt; <span class="instruction-gt">&quot;hubungannya Azure so&quot;</span>
+                                Edit: <span class="instruction-src">&quot;DOLDURMAN Crash mele&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;hubungannya Azure so&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1787,7 +1365,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;ngatur repente occup&quot;</span> -&gt; <span class="instruction-gt">&quot;menit Schachtel locu&quot;</span>
+                                Edit: <span class="instruction-src">&quot;ngatur repente occup&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;menit Schachtel locu&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1814,7 +1393,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;BOMBS&quot;</span> -&gt; <span class="instruction-gt">&quot;RIGHT&quot;</span>
+                                Edit: <span class="instruction-src">&quot;BOMBS&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;RIGHT&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1835,7 +1415,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;PRIMERA&quot;</span> -&gt; <span class="instruction-gt">&quot;RECEIVE&quot;</span>
+                                Edit: <span class="instruction-src">&quot;PRIMERA&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;RECEIVE&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1856,7 +1437,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;IRISH&quot;</span> -&gt; <span class="instruction-gt">&quot;Begin&quot;</span>
+                                Edit: <span class="instruction-src">&quot;IRISH&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;Begin&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1877,7 +1459,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;Rest&quot;</span> -&gt; <span class="instruction-gt">&quot;COME&quot;</span>
+                                Edit: <span class="instruction-src">&quot;Rest&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;COME&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1898,7 +1481,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;COOL&quot;</span> -&gt; <span class="instruction-gt">&quot;WEAR&quot;</span>
+                                Edit: <span class="instruction-src">&quot;COOL&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;WEAR&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1919,7 +1503,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;Draw&quot;</span> -&gt; <span class="instruction-gt">&quot;Toon&quot;</span>
+                                Edit: <span class="instruction-src">&quot;Draw&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;Toon&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1940,7 +1525,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;THE&quot;</span> -&gt; <span class="instruction-gt">&quot;PAY&quot;</span>
+                                Edit: <span class="instruction-src">&quot;THE&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;PAY&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1961,7 +1547,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;THE&quot;</span> -&gt; <span class="instruction-gt">&quot;OUT&quot;</span>
+                                Edit: <span class="instruction-src">&quot;THE&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;OUT&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -1982,7 +1569,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;GOLF&quot;</span> -&gt; <span class="instruction-gt">&quot;Need&quot;</span>
+                                Edit: <span class="instruction-src">&quot;GOLF&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;Need&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -2003,7 +1591,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;Chinn&quot;</span> -&gt; <span class="instruction-gt">&quot;Among&quot;</span>
+                                Edit: <span class="instruction-src">&quot;Chinn&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;Among&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -2024,7 +1613,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;PUT&quot;</span> -&gt; <span class="instruction-gt">&quot;GET&quot;</span>
+                                Edit: <span class="instruction-src">&quot;PUT&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;GET&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -2045,7 +1635,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;TIME&quot;</span> -&gt; <span class="instruction-gt">&quot;HOUR&quot;</span>
+                                Edit: <span class="instruction-src">&quot;TIME&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;HOUR&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -2072,7 +1663,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;Teste modos reur agribusiness&quot;</span> -&gt; <span class="instruction-gt">&quot;Ngapain aliens sebodoh mer Mar&quot;</span>
+                                Edit: <span class="instruction-src">&quot;Teste modos reur agribusiness&quot;</span>
+                                -&gt; <span class="instruction-gt">&quot;Ngapain aliens sebodoh mer Mar&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -2093,7 +1685,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;andrologia orts comport WHERE&quot;</span> -&gt; <span class="instruction-gt">&quot;voudras Option Tristan usado C&quot;</span>
+                                Edit: <span class="instruction-src">&quot;andrologia orts comport WHERE&quot;</span>
+                                -&gt; <span class="instruction-gt">&quot;voudras Option Tristan usado C&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -2114,7 +1707,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;faut datorati Pemakaian Dread&quot;</span> -&gt; <span class="instruction-gt">&quot;nisayildiz deythin massacre br&quot;</span>
+                                Edit: <span class="instruction-src">&quot;faut datorati Pemakaian Dread&quot;</span>
+                                -&gt; <span class="instruction-gt">&quot;nisayildiz deythin massacre br&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -2135,7 +1729,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;NAIXUE&quot;</span> -&gt; <span class="instruction-gt">&quot;fiancee Status lifetim&quot;</span>
+                                Edit: <span class="instruction-src">&quot;NAIXUE&quot;</span> -&gt; <span
+                                    class="instruction-gt">&quot;fiancee Status lifetim&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -2156,7 +1751,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;sabia cello kurz ortak Boutiqu&quot;</span> -&gt; <span class="instruction-gt">&quot;Energieschub Aborte programme&quot;</span>
+                                Edit: <span class="instruction-src">&quot;sabia cello kurz ortak Boutiqu&quot;</span>
+                                -&gt; <span class="instruction-gt">&quot;Energieschub Aborte programme&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -2177,7 +1773,8 @@
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
-                                Edit: <span class="instruction-src">&quot;relationships olhar DRAMASH Ce&quot;</span> -&gt; <span class="instruction-gt">&quot;TOYS Stellung RACUN Step-sibli&quot;</span>
+                                Edit: <span class="instruction-src">&quot;relationships olhar DRAMASH Ce&quot;</span>
+                                -&gt; <span class="instruction-gt">&quot;TOYS Stellung RACUN Step-sibli&quot;</span>
                             </span>
                         </div>
                         <div class="dataset-media-row">
@@ -2206,14 +1803,14 @@
             // 1. Find all container blocks that have videos
             const comparisonBlocks = document.querySelectorAll('.comparison-block');
             const datasetSamples = document.querySelectorAll('.dataset-sample');
-            
+
             // Helper function to toggle all videos on the page
             let isGlobalPlaying = true; // default state
 
             function toggleGlobalPlayback(buttonClicked) {
                 const allVideos = document.querySelectorAll('video');
                 const allButtons = document.querySelectorAll('.video-control-btn');
-                
+
                 // Toggle state
                 isGlobalPlaying = !isGlobalPlaying;
 
@@ -2247,7 +1844,7 @@
                 const btn = document.createElement('button');
                 btn.className = 'video-control-btn';
                 btn.title = 'Play/Pause All Videos';
-                
+
                 // Add icon (Pause by default as videos autoplay)
                 const icon = document.createElement('i');
                 icon.className = 'fa-solid fa-pause';
@@ -2346,7 +1943,7 @@
             const navCollapseBtn = nav.querySelector('.nav-collapse');
             const navCloseBtn = nav.querySelector('.nav-close');
             const navHeader = nav.querySelector('.nav-header');
-            const navTriggerSection = document.getElementById('comparisons');
+            const navTriggerSection = document.getElementById('abstract');
             const targetMap = navItems
                 .map((item) => {
                     const id = item.getAttribute('data-target');
@@ -2368,14 +1965,22 @@
                     return;
                 }
 
-                const offset = window.scrollY + 120;
+                const triggerLine = Math.max(120, window.innerHeight * 0.22);
                 let active = targetMap[0];
+                let found = false;
 
-                targetMap.forEach((entry) => {
-                    if (entry.target.offsetTop <= offset) {
+                for (const entry of targetMap) {
+                    const top = entry.target.getBoundingClientRect().top;
+                    if (top <= triggerLine) {
                         active = entry;
+                        found = true;
+                    } else if (found) {
+                        break;
+                    } else {
+                        active = entry;
+                        break;
                     }
-                });
+                }
 
                 if (active) {
                     navItems.forEach((i) => i.classList.remove('active'));
@@ -2419,4 +2024,5 @@
         });
     </script>
 </body>
+
 </html>
