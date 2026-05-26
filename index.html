@@ -42,6 +42,7 @@
             <li class="nav-item h2" data-target="stage1-training">Stage1 Training Data: SynthTE-Easy</li>
             <li class="nav-item h2" data-target="stage2-training">Stage2 Training: RealTE</li>
             <li class="nav-item h2" data-target="stage3-training">Stage3 Training Data: SynthTE-Hard</li>
+            <li class="nav-item h1" data-target="citation">Citation</li>
         </ul>
     </nav>
 
@@ -51,7 +52,8 @@
                 <div class="columns is-centered">
                     <div class="column has-text-centered">
                         <h1 class="title is-1 publication-title"><span
-                                class="has-text-danger has-text-weight-semibold">SteerVTE</span>: Precise Video Text Editing with Style and Glyph Control</h1>
+                                class="has-text-danger has-text-weight-semibold">SteerVTE</span>: Precise Video Text
+                            Editing with Style and Glyph Control</h1>
                         <div class="is-size-5 publication-authors">
                             <span class="author-block">
                                 <a href="https://openreview.net/profile?id=%7EKai_Zeng7">Kai Zeng</a><sup>1,2,◇</sup>,
@@ -61,10 +63,11 @@
                                     Li</a><sup>2</sup>,
                             </span>
                             <span class="author-block">
-                                <a href="https://scholar.google.com/citations?user=TaYR7cMAAAAJ&hl=en">Zhengwei Wang</a><sup>2</sup>,
+                                <a href="https://scholar.google.com/citations?user=TaYR7cMAAAAJ&hl=en">Zhengwei
+                                    Wang</a><sup>2</sup>,
                             </span>
                             <span class="author-block">
-                                <a href="https://yingchen001.github.io/">Yingchen Yu</a><sup>2&#9824;</sup>,
+                                <a href="https://yingchen001.github.io/">Yingchen Yu</a><sup>3&#9824;</sup>,
                             </span>
                             <span class="author-block">
                                 <a href="https://linyiheng123.github.io/">Yiheng Lin</a><sup>2,◇</sup>,
@@ -91,11 +94,14 @@
                         <!-- <br> -->
                         <div class="is-size-5 publication-authors">
                             <span class="author-block"><sup>1</sup>Peking University</span>&nbsp;&nbsp;
-                            <span class="author-block"><sup>2</sup>ByteDance</span>
+                            <span class="author-block"><sup>2</sup>ByteDance (CN)</span>&nbsp;&nbsp;
+                            <span class="author-block"><sup>3</sup>ByteDance (SG)</span>
                             <br>
 
-                            <span class="author-block"><sup>◇</sup>Intern of ByteDance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span class="author-block"><sup>&clubs;</sup>Projector Leader</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="author-block"><sup>◇</sup>Intern of
+                                ByteDance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="author-block"><sup>&clubs;</sup>Project
+                                Leader</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <span class="author-block"><sup>&#9824;</sup>Corresponding Author</span>
                         </div>
 
@@ -166,13 +172,24 @@
             <h2>Abstract</h2>
             <div class="abstract-content">
                 <p>
-                    Visual text editing aims to precisely modify text in images and videos while preserving stylistic consistency and visual realism. 
-                    Despite significant advances in the image domain, video text editing remains largely unexplored: it is a localized task demanding stroke-level precision within small text regions, which compounds the challenges of cross-frame accuracy, temporal coherence, and stylistic fidelity. 
-                    We introduce SteerVTE, a unified framework that <b>steer</b>s a frozen video diffusion model to perform precise <b>V</b>ideo <b>T</b>ext <b>E</b>diting through style and glyph control. 
-                    Built on a frozen diffusion transformer, SteerVTE attaches a lightweight text context adapter with two complementary modules: a style encoder capturing the original text's visual attributes, and dual-granularity glyph encoders encoding the target text at both the line and character levels.
-                    To overcome the inherently weak text rendering priors of video foundation models, we further propose a glyph-aware spatial-focal loss and a three-stage progressive training curriculum that scales from image to video data.
-                    To support large-scale training, we also develop an automatic synthesis pipeline and construct SteerVTE-1M, a dataset of one million triplets spanning diverse scenes, fonts, and stylistic effects.
-                    Extensive experiments demonstrate that SteerVTE substantially outperforms existing video editing baselines across text accuracy, style consistency, and temporal coherence.
+                    Visual text editing aims to precisely modify text in images and videos while preserving stylistic
+                    consistency and visual realism.
+                    Despite significant advances in the image domain, video text editing remains largely unexplored: it
+                    is a localized task demanding stroke-level precision within small text regions, which compounds the
+                    challenges of cross-frame accuracy, temporal coherence, and stylistic fidelity.
+                    We introduce SteerVTE, a unified framework that <b>steer</b>s a frozen video diffusion model to
+                    perform precise <b>V</b>ideo <b>T</b>ext <b>E</b>diting through style and glyph control.
+                    Built on a frozen diffusion transformer, SteerVTE attaches a lightweight text context adapter with
+                    two complementary modules: a style encoder capturing the original text's visual attributes, and
+                    dual-granularity glyph encoders encoding the target text at both the line and character levels.
+                    To overcome the inherently weak text rendering priors of video foundation models, we further propose
+                    a glyph-aware spatial-focal loss and a three-stage progressive training curriculum that scales from
+                    image to video data.
+                    To support large-scale training, we also develop an automatic synthesis pipeline and construct
+                    SteerVTE-1M, a dataset of one million triplets spanning diverse scenes, fonts, and stylistic
+                    effects.
+                    Extensive experiments demonstrate that SteerVTE substantially outperforms existing video editing
+                    baselines across text accuracy, style consistency, and temporal coherence.
                 </p>
             </div>
         </div>
@@ -192,7 +209,12 @@
             <div class="method-caption-stack">
                 <div class="method-caption-item">
                     <div class="method-caption-title">Method Overview</div>
-                    We propose SteerVTE, a framework that augments a frozen text-to-video DiT with a lightweight Text Context Adapter. The adapter injects three editing signals via cross-attention: a spatiotemporal mask for region localization, VLM-encoded style features extracted from masked-frame crops, and dual-granularity glyph features of the target text. We further introduce GLAS Loss, which combines latent-space mask reweighting with RGB-space OCR supervision to improve sentence-level consistency and fine-grained text editing quality.
+                    We propose SteerVTE, a framework that augments a frozen text-to-video DiT with a lightweight Text
+                    Context Adapter. The adapter injects three editing signals via cross-attention: a spatiotemporal
+                    mask for region localization, VLM-encoded style features extracted from masked-frame crops, and
+                    dual-granularity glyph features of the target text. We further introduce GLAS Loss, which combines
+                    latent-space mask reweighting with RGB-space OCR supervision to improve sentence-level consistency
+                    and fine-grained text editing quality.
                 </div>
                 <div class="method-caption-item">
                     <div class="method-caption-title">Training Strategy</div>
@@ -1796,6 +1818,21 @@
             </div>
         </div>
     </section>
+    <section id="citation">
+        <div class="container">
+            <h2>Citation</h2>
+            <div class="bibtex-box">
+                <button class="citation-copy-btn" type="button" aria-label="Copy citation">Copy</button>
+                <pre><code id="citation-bibtex">@article{zeng2026steervte,
+  title={SteerVTE: Precise Video Text Editing with Style and Glyph Control},
+  author={Kai, Zeng and Moran, Li and Zhengwei, Wang and Yingchen, Yu and Yiheng, Lin and Ruichuan, An and Ming, Lu and Qi, She and Wentao, Zhang},
+  journal={arXiv preprint arXiv:xxxx},
+  year={2026}
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
     <footer style="padding: 60px 0;"></footer>
 
     <script>
@@ -2017,6 +2054,27 @@
                 e.stopPropagation();
                 nav.classList.add('collapsed');
             });
+
+            // 5. Citation copy button
+            const citationCopyBtn = document.querySelector('.citation-copy-btn');
+            const citationBibtex = document.getElementById('citation-bibtex');
+            if (citationCopyBtn && citationBibtex) {
+                citationCopyBtn.addEventListener('click', async () => {
+                    const text = citationBibtex.textContent || '';
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        citationCopyBtn.textContent = 'Copied!';
+                        setTimeout(() => {
+                            citationCopyBtn.textContent = 'Copy';
+                        }, 1200);
+                    } catch (err) {
+                        citationCopyBtn.textContent = 'Failed';
+                        setTimeout(() => {
+                            citationCopyBtn.textContent = 'Copy';
+                        }, 1200);
+                    }
+                });
+            }
 
             window.addEventListener('scroll', updateNavActive, { passive: true });
             window.addEventListener('resize', updateNavActive);

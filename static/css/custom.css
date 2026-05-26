@@ -537,6 +537,58 @@
             border-top: 1px solid var(--border-color);
         }
 
+        #citation {
+            background: #f8fafc;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .bibtex-box {
+            position: relative;
+            max-width: 980px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            padding: 18px 18px 16px 18px;
+        }
+
+        .bibtex-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #334155;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.95rem;
+            line-height: 1.55;
+            padding: 2px 0;
+        }
+
+        .bibtex-box code {
+            color: inherit;
+            font-family: inherit;
+        }
+
+        .citation-copy-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            background: #f8fafc;
+            color: #334155;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 6px 10px;
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+
+        .citation-copy-btn:hover {
+            background: #e2e8f0;
+            border-color: #94a3b8;
+        }
+
         .dataset-stage {
             margin-top: 18px;
             margin-bottom: 50px;
