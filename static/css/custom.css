@@ -259,6 +259,88 @@
             background: var(--primary-color);
         }
 
+        .method-section {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 30px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .method-section:last-child {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .method-section h3 {
+            margin-top: 0;
+            margin-bottom: 18px;
+        }
+
+        .method-text {
+            color: #475569;
+            font-size: 1.02rem;
+            line-height: 1.7;
+            text-align: justify;
+        }
+
+        .method-text strong {
+            color: #334155;
+        }
+
+        .method-text ul {
+            margin: 16px 0 0;
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .method-text li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 10px;
+        }
+
+        .method-text li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.72em;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            transform: translateY(-50%);
+        }
+
+        .method-figure {
+            margin: 24px auto 0;
+            text-align: center;
+        }
+
+        .method-figure img {
+            display: block;
+            width: min(88%, 900px);
+            height: auto;
+            margin: 0 auto;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .method-figure figcaption {
+            max-width: 900px;
+            margin: 12px auto 0;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.55;
+            text-align: justify;
+        }
+
+        @media (max-width: 768px) {
+            .method-figure img {
+                width: 100%;
+            }
+        }
+
         /* --- Floating Navbar --- */
         .nav-container {
             position: fixed;
@@ -394,10 +476,10 @@
 
         /* --- Scrolling Window Logic (Comparisons) --- */
         .comparison-block {
-            margin-bottom: 40px;
+            margin-bottom: 26px;
             background: #fff;
-            padding: 20px;
-            border-radius: 16px;
+            padding: 12px;
+            border-radius: 12px;
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow-sm);
             position: relative;
@@ -405,18 +487,18 @@
 
         .instruction-label {
             text-align: center;
-            margin-bottom: 20px;
-            padding-right: 40px;
-            padding-left: 40px;
+            margin-bottom: 12px;
+            padding-right: 34px;
+            padding-left: 34px;
         }
 
         .instruction-badge {
             background: #eff6ff;
             color: var(--primary-color);
-            padding: 8px 24px;
+            padding: 6px 16px;
             border-radius: 50px;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.9rem;
             display: inline-block;
             border: 1px solid #dbeafe;
         }
@@ -457,10 +539,12 @@
         .comparison-block .scroll-window,
         .comparison-block .scene-text-grid {
             display: grid;
-            grid-template-columns: repeat(5, minmax(0, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 10px;
             overflow: visible;
             padding-bottom: 4px;
+            width: 90%;
+            margin: 0 auto;
         }
 
         .comparison-block .video-card {
@@ -511,7 +595,9 @@
         @media (max-width: 1200px) {
             .comparison-block .scroll-window,
             .comparison-block .scene-text-grid {
-                grid-template-columns: repeat(4, minmax(0, 1fr));
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 8px;
+                width: 94%;
             }
         }
 
@@ -519,6 +605,8 @@
             .comparison-block .scroll-window,
             .comparison-block .scene-text-grid {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 8px;
+                width: 100%;
             }
         }
 
@@ -527,7 +615,7 @@
             font-size: 0.85rem;
             font-weight: 600;
             color: #64748b;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             white-space: nowrap;
         }
 

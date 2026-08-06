@@ -34,8 +34,8 @@
         </div>
         <ul class="nav-list">
             <li class="nav-item h1" data-target="abstract">Abstract</li>
-            <li class="nav-item h1" data-target="method">Method</li>
-            <li class="nav-item h1" data-target="comparisons">Comparison with Baselines</li>
+            <li class="nav-item h1" data-target="method">Methodology</li>
+            <li class="nav-item h1" data-target="comparisons">Qualitative Comparisons</li>
             <li class="nav-item h2" data-target="scene-text-scenarios">Scene Text Scenarios</li>
             <li class="nav-item h2" data-target="synthetic-scenarios">Synthetic Scenarios</li>
             <li class="nav-item h2" data-target="real-scenarios">Real Scenarios</li>
@@ -57,7 +57,7 @@
                             Editing with Style and Glyph Control</h1>
                         <div class="is-size-5 publication-authors">
                             <span class="author-block">
-                                <a href="https://openreview.net/profile?id=%7EKai_Zeng7">Kai Zeng</a><sup>1,2,◇</sup>,
+                                <a href="https://openreview.net/profile?id=%7EKai_Zeng7">Kai Zeng</a><sup>1,2,*</sup>,
                             </span>
                             <span class="author-block">
                                 <a href="https://moranli-aca.github.io/">Moran
@@ -68,10 +68,10 @@
                                     Wang</a><sup>2</sup>,
                             </span>
                             <span class="author-block">
-                                <a href="https://yingchen001.github.io/">Yingchen Yu</a><sup>3&#9824;</sup>,
+                                <a href="https://yingchen001.github.io/">Yingchen Yu</a><sup>3,✉</sup>,
                             </span>
                             <span class="author-block">
-                                <a href="https://linyiheng123.github.io/">Yiheng Lin</a><sup>2,◇</sup>,
+                                <a href="https://linyiheng123.github.io/">Yiheng Lin</a><sup>2,*</sup>,
                             </span>
                             <br>
                             <span class="author-block">
@@ -82,10 +82,10 @@
                             </span>
                             <!-- <br> -->
                             <span class="author-block">
-                                <a href="https://qi-she.net/">Qi She</a><sup>2&clubs;</sup>,
+                                <a href="https://qi-she.net/">Qi She</a><sup>2,†</sup>,
                             </span>
                             <span class="author-block">
-                                <a href="https://zwt233.github.io/">Wentao Zhang</a><sup>1&#9824;</sup>
+                                <a href="https://zwt233.github.io/">Wentao Zhang</a><sup>1,✉</sup>
                             </span>
                         </div>
                         <!-- <br> -->
@@ -99,11 +99,11 @@
                             <span class="author-block"><sup>3</sup>ByteDance (SG)</span>
                             <br>
 
-                            <span class="author-block"><sup>◇</sup>Intern of
+                            <span class="author-block"><sup>*</sup>Intern of
                                 ByteDance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span class="author-block"><sup>&clubs;</sup>Project
+                            <span class="author-block"><sup>†</sup>Project
                                 Leader</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span class="author-block"><sup>&#9824;</sup>Corresponding Author</span>
+                            <span class="author-block"><sup>✉</sup>Corresponding Author</span>
                         </div>
 
                         <div class="column has-text-centered">
@@ -198,30 +198,64 @@
 
     <section id="method">
         <div class="container">
-            <h2>Method</h2>
-            <div class="method-grid">
-                <div class="method-item">
-                    <img src="static/images/overview.png" alt="SteerVTE method framework">
+            <h2>Methodology</h2>
+
+            <div class="method-section">
+                <h3>Architecture Design</h3>
+                <div class="method-text">
+                    SteerVTE augments a frozen video diffusion transformer with a
+                    <strong>Text Context Adapter</strong> that jointly encodes positional, stylistic, and glyph-level cues.
+                    <ul>
+                        <li><strong>Mask-guided positional conditioning</strong> uses a spatiotemporal mask to localize edits while preserving background fidelity.</li>
+                        <li><strong>Native-resolution VLM style encoding</strong> preserves typographic attributes such as stroke thickness, spacing, and aspect ratio by tokenizing images at original aspect ratios.</li>
+                        <li><strong>Dual-granularity glyph control</strong> injects line-level layout priors and character-level stroke priors from an OCR network, both rendered in a neutral font to expose content while leaving style to the VLM encoder.</li>
+                    </ul>
                 </div>
-                <div class="method-item">
-                    <img src="static/images/training.png" alt="SteerVTE progressive training strategy">
+                <figure class="method-figure">
+                    <img src="static/images/overview.png" alt="SteerVTE architecture diagram">
+                    <figcaption><b>SteerVTE architecture diagram.</b> A frozen DiT is augmented with a Text Context Adapter injecting mask, VLM style, and glyph features via cross attention.</figcaption>
+                </figure>
+            </div>
+
+            <div class="method-section">
+                <h3>Glyph-Aware Spatial-Focal (GLAS) Loss</h3>
+                <div class="method-text">
+                    Standard flow matching treats all spatial locations equally, causing text-region gradients to be suppressed by backgrounds and lacking inductive bias toward character topology. We propose the <strong>GLAS Loss</strong>, a dual-space paradigm:
+                    <ul>
+                        <li><strong>Spatial-Focal Loss</strong> reweights the objective with a focal map from the mask, concentrating optimization on text regions.</li>
+                        <li><strong>Glyph-Aware OCR Loss</strong> imposes pixel-space supervision via an OCR recognizer, enforcing stroke-level fidelity and character-level recognizability.</li>
+                    </ul>
+                    The overall GLAS Loss combines these components for precise character-level editing.
                 </div>
             </div>
-            <div class="method-caption-stack">
-                <div class="method-caption-item">
-                    <div class="method-caption-title">Method Overview</div>
-                    We propose SteerVTE, a framework that augments a frozen text-to-video DiT with a lightweight Text
-                    Context Adapter. The adapter injects three editing signals via cross-attention: a spatiotemporal
-                    mask for region localization, VLM-encoded style features extracted from masked-frame crops, and
-                    dual-granularity glyph features of the target text. We further introduce GLAS Loss, which combines
-                    latent-space mask reweighting with RGB-space OCR supervision to improve sentence-level consistency
-                    and fine-grained text editing quality.
+
+            <div class="method-section">
+                <h3>Training Dataset</h3>
+                <figure class="method-figure">
+                    <img src="static/images/dataset.png" alt="SteerVTE training dataset construction">
+                </figure>
+                <div class="method-text">
+                    We construct <strong>SteerVTE-1M</strong> with two components.
+                    <ul>
+                        <li><strong>SynthTE</strong> synthesizes 500k image pairs (easy) and 200k video pairs (hard) using 1,933 fonts and OpenSora-Plan backgrounds.</li>
+                        <li><strong>RealTE</strong> derives 300k image pairs from AnyWord-3M via OCR filtering, state-of-the-art editing, and style similarity verification.</li>
+                    </ul>
+                    The final dataset offers balanced difficulty and style coverage, released for research use.
                 </div>
-                <div class="method-caption-item">
-                    <div class="method-caption-title">Training Strategy</div>
-                    In the first stage, the connector is primarily trained to align style and glyph features.
-                    In the second stage, the connector and DiT are jointly trained.
-                    In the third stage, the GLAS loss is introduced and training proceeds on the video dataset.
+            </div>
+
+            <div class="method-section">
+                <h3>Training Curriculum</h3>
+                <figure class="method-figure">
+                    <img src="static/images/training.png" alt="SteerVTE progressive training curriculum">
+                </figure>
+                <div class="method-text">
+                    We train SteerVTE with a progressive three-stage curriculum.
+                    <ul>
+                        <li><strong>Stage 1: Feature Alignment.</strong> Trains only linear connectors on 500k synthetic images.</li>
+                        <li><strong>Stage 2: In-the-Wild Fine-Tuning.</strong> Activates LoRAs and jointly optimizes on 300k real-world samples to bridge the synthetic-to-real gap.</li>
+                        <li><strong>Stage 3: Temporal Fine-Tuning.</strong> Extends to 200k video clips with GLAS Loss to enforce kinematic coherence and glyph fidelity.</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -229,7 +263,7 @@
 
     <section id="comparisons">
         <div class="container">
-            <h2 style="margin-bottom: 60px;">Comparison with Baselines</h2>
+            <h2 style="margin-bottom: 60px;">Qualitative Comparison</h2>
             <p class="subsection-description">
                 Please press the play button on the top right to pause all videos for more detailed frame-by-frame
                 comparison.<br>
@@ -242,7 +276,7 @@
                 <h3 id="scene-text-scenarios">Video Text Editing in <span style="color: red; font-weight: bold;">Scene Text</span> Scenarios</h3>
                 <h4>Moving</h4>
                 <p class="subsection-description" style="margin-top: -12px;">Note: STRIVE* is our reproduced implementation of STRIVE.</p>
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">Edit: <span class="instruction-src">&quot;CLEAN&quot;</span> -&gt; <span class="instruction-gt">&quot;sween&quot;</span></span>
                     </div>
@@ -276,7 +310,7 @@
                             <video autoplay loop muted playsinline src="results/scene_text/moving/075/textctrl.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">Edit: <span class="instruction-src">&quot;CLEAN&quot;</span> -&gt; <span class="instruction-gt">&quot;veget&quot;</span></span>
@@ -312,7 +346,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">Edit: <span class="instruction-src">&quot;KATHERINE&quot;</span> -&gt; <span class="instruction-gt">&quot;monetaris&quot;</span></span>
                     </div>
@@ -346,8 +380,8 @@
                             <video autoplay loop muted playsinline src="results/scene_text/moving/119/textctrl.mp4"></video>
                         </div>
                     </div>
-                </div>
-                <div class="comparison-block">
+                </div> -->
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">Edit: <span class="instruction-src">&quot;gm&quot;</span> -&gt; <span class="instruction-gt">&quot;Re&quot;</span></span>
                     </div>
@@ -381,7 +415,7 @@
                             <video autoplay loop muted playsinline src="results/scene_text/moving/053/textctrl.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">Edit: <span class="instruction-src">&quot;BORTOLINI&quot;</span> -&gt; <span class="instruction-gt">&quot;LYMPH&quot;</span></span>
@@ -628,7 +662,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">Edit: <span class="instruction-src">&quot;13:03&quot;</span> -&gt; <span class="instruction-gt">&quot;Conqu&quot;</span></span>
                     </div>
@@ -662,8 +696,8 @@
                             <video autoplay loop muted playsinline src="results/scene_text/static/134/textctrl.mp4"></video>
                         </div>
                     </div>
-                </div>
-                <div class="comparison-block">
+                </div> -->
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">Edit: <span class="instruction-src">&quot;UPDATES&quot;</span> -&gt; <span class="instruction-gt">&quot;Taxman&quot;</span></span>
                     </div>
@@ -697,8 +731,8 @@
                             <video autoplay loop muted playsinline src="results/scene_text/static/147/textctrl.mp4"></video>
                         </div>
                     </div>
-                </div>
-                <div class="comparison-block">
+                </div> -->
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">Edit: <span class="instruction-src">&quot;STERLING&quot;</span> -&gt; <span class="instruction-gt">&quot;Cumuli&quot;</span></span>
                     </div>
@@ -732,12 +766,12 @@
                             <video autoplay loop muted playsinline src="results/scene_text/static/014/textctrl.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
                 <h3 id="synthetic-scenarios">Video Text Editing in Synthetic Scenarios</h3>
                 <h4>Common</h4>
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;Suegra Wynn&#x27;s MASTITIS bernafa&quot;</span>
@@ -770,7 +804,7 @@
                             <video autoplay loop muted playsinline src="results/syn/no_style/017/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="comparison-block">
                     <div class="instruction-label">
@@ -811,7 +845,7 @@
                     </div>
                 </div>
 
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;network Ginsen First&quot;</span> -&gt; <span
@@ -844,9 +878,9 @@
                             <video autoplay loop muted playsinline src="results/syn/no_style/031/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;EDININ JAM vanish Ti&quot;</span> -&gt; <span
@@ -883,9 +917,9 @@
                             <video autoplay loop muted playsinline src="results/syn/no_style/048/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;agregaste Snapchat T&quot;</span> -&gt; <span
@@ -922,7 +956,7 @@
                             <video autoplay loop muted playsinline src="results/syn/no_style/071/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="comparison-block">
                     <div class="instruction-label">
@@ -1000,7 +1034,7 @@
                     </div>
                 </div>
 
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;ardus PUBLIC jodido Heart&quot;</span> -&gt; <span
@@ -1033,9 +1067,9 @@
                             <video autoplay loop muted playsinline src="results/syn/style/041/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;Qu&#x27;il Snapchat OVE ordures&quot;</span> -&gt;
@@ -1068,9 +1102,9 @@
                             <video autoplay loop muted playsinline src="results/syn/style/051/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;Destiny gamitin Pepitama chat&quot;</span> -&gt;
@@ -1103,7 +1137,7 @@
                             <video autoplay loop muted playsinline src="results/syn/style/078/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="comparison-block">
                     <div class="instruction-label">
@@ -1151,7 +1185,7 @@
             <div class="subsection">
                 <h3 id="real-scenarios">Video Text Editing in Real Scenarios</h3>
                 <h4>Common</h4>
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;SURFING&quot;</span> -&gt; <span
@@ -1189,7 +1223,7 @@
                             <video autoplay loop muted playsinline src="results/real/no_style/163/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="comparison-block">
                     <div class="instruction-label">
@@ -1271,7 +1305,7 @@
                     </div>
                 </div>
 
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;Gym &amp; fitness&quot;</span> -&gt; <span
@@ -1309,9 +1343,9 @@
                             <video autoplay loop muted playsinline src="results/real/no_style/205/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;But Benny＇s mom has&quot;</span> -&gt; <span
@@ -1349,9 +1383,9 @@
                             <video autoplay loop muted playsinline src="results/real/no_style/225/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;Contra enk incontrato&quot;</span> -&gt; <span
@@ -1389,9 +1423,9 @@
                             <video autoplay loop muted playsinline src="results/real/no_style/000/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;I mportant Must-Have&quot;</span> -&gt; <span
@@ -1429,9 +1463,9 @@
                             <video autoplay loop muted playsinline src="results/real/no_style/005/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;People were rally marking it&quot;</span> -&gt;
@@ -1469,7 +1503,7 @@
                             <video autoplay loop muted playsinline src="results/real/no_style/006/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <hr class="subsection-divider">
                 <h4>Stylized</h4>
@@ -1512,7 +1546,7 @@
                     </div>
                 </div>
 
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;END&quot;</span> -&gt; <span
@@ -1549,9 +1583,9 @@
                             <video autoplay loop muted playsinline src="results/real/style/142/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
-                <div class="comparison-block">
+                <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">
                             Edit: <span class="instruction-src">&quot;BEA&quot;</span> -&gt; <span
@@ -1588,7 +1622,7 @@
                             <video autoplay loop muted playsinline src="results/real/style/203/fluxtext.mp4"></video>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="comparison-block">
                     <div class="instruction-label">
@@ -1771,7 +1805,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="dataset-sample">
+                    <!-- <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
                                 Edit: <span class="instruction-src">&quot;ointment acreditar&quot;</span> -&gt; <span
@@ -1902,14 +1936,14 @@
                                 <img src="datasets/stage1/12/tgt.png" alt="tgt">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <hr class="subsection-divider">
             <div class="subsection dataset-stage dataset-stage2">
                 <h3 id="stage2-training">Stage2 Training: RealTE</h3>
                 <div class="dataset-grid">
-                    <div class="dataset-sample">
+                    <!-- <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
                                 Edit: <span class="instruction-src">&quot;BOMBS&quot;</span> -&gt; <span
@@ -1996,8 +2030,8 @@
                                 <img src="datasets/stage2/4/tgt.png" alt="tgt">
                             </div>
                         </div>
-                    </div>
-                    <div class="dataset-sample">
+                    </div> -->
+                    <!-- <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
                                 Edit: <span class="instruction-src">&quot;COOL&quot;</span> -&gt; <span
@@ -2040,7 +2074,7 @@
                                 <img src="datasets/stage2/6/tgt.png" alt="tgt">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="dataset-sample">
                         <div class="instruction-label">
                             <span class="instruction-badge">
