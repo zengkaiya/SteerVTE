@@ -1,0 +1,6 @@
+video,prompt,vace_video,vace_video_mask,vace_reference_image,vace_style_image,gt_text,src_text
+demo_data/1/tgt.mp4,"A clear and high-quality video with smooth motion, featuring the stylized text: ""That was totally unexpected"".",demo_data/1/src.mp4,demo_data/1/mask.mp4,demo_data/1/tgt_content.png,demo_data/1/src_style.png,That was totally unexpected,Suegra Wynn's MASTITIS bernafa
+demo_data/2/tgt.mp4,"A clear and high-quality video with smooth motion, featuring the stylized text: ""I'm very busy"".",demo_data/2/src.mp4,demo_data/2/mask.mp4,demo_data/2/tgt_content.png,demo_data/2/src_style.png,I'm very busy,Gym & fitness
+demo_data/3/tgt.mp4,"A clear and high-quality video with smooth motion, featuring the stylized text: ""sween"".",demo_data/3/src.mp4,demo_data/3/mask.mp4,demo_data/3/tgt_content.png,demo_data/3/src_style.png,sween,CLEAN
+demo_data/4/tgt.mp4,"A clear and high-quality video with smooth motion, featuring the stylized text: ""CERE"".",demo_data/4/src.mp4,demo_data/4/mask.mp4,demo_data/4/tgt_content.png,demo_data/4/src_style.png,CERE,1964
+demo_data/5/tgt.mp4,"A clear and high-quality video with smooth motion, featuring the stylized text: ""COUNTDOWN T"".",demo_data/5/src.mp4,demo_data/5/mask.mp4,demo_data/5/tgt_content.png,demo_data/5/src_style.png,COUNTDOWN T,L E T R A N
