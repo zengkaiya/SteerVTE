@@ -61,13 +61,15 @@ python infer_demo.py
 
 ## 📊 Run the VTE-Bench
 ```shell
-# Donwload the VTE-Bench
+# 1. Download the VTE-Bench dataset
 hf download --repo-type dataset MewtwoX23/VTE-Bench  --local-dir VTE-Bench
 
+# 2. Run inference on all subsets
 NUM_GPUS=4 \
 DATASET_SPECS="VTE-Bench/SceneText.csv;VTE-Bench/Real.csv;VTE-Bench/Synth.csv" \
 bash infer_bench.sh
 
+# 3. Run evaluation
 DATASET_SPECS="VTE-Bench/SceneText.csv;VTE-Bench/Real.csv;VTE-Bench/Synth.csv" \
 bash eval/eval.sh
 ```
