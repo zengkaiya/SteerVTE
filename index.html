@@ -4,16 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SteerVTE: Precise Video Text Editing with Style and Glyph Control</title>
+    <title>SteerVTE: Seamless Video Text Editing with Style and Glyph Control | NeurIPS 2026</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
-    <link rel="stylesheet" href="static/css/bulma.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/css/academicons.min.css">
     <link rel="stylesheet" href="static/css/index.css">
-    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
     <link rel="stylesheet" href="static/css/custom.css">
     <link rel="icon" href="./static/images/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -48,129 +45,80 @@
     </nav>
 
     <section class="hero">
-        <div class="hero-body">
-            <div class="container is-max-desktop">
-                <div class="columns is-centered">
-                    <div class="column has-text-centered">
-                        <h1 class="title is-1 publication-title"><span
-                                class="has-text-danger has-text-weight-semibold">SteerVTE</span>: Precise Video Text
-                            Editing with Style and Glyph Control</h1>
-                        <div class="is-size-5 publication-authors">
-                            <span class="author-block">
-                                <a href="https://openreview.net/profile?id=%7EKai_Zeng7">Kai Zeng</a><sup>1,2,*</sup>,
-                            </span>
-                            <span class="author-block">
-                                <a href="https://moranli-aca.github.io/">Moran
-                                    Li</a><sup>2</sup>,
-                            </span>
-                            <span class="author-block">
-                                <a href="https://scholar.google.com/citations?user=TaYR7cMAAAAJ&hl=en">Zhengwei
-                                    Wang</a><sup>2</sup>,
-                            </span>
-                            <span class="author-block">
-                                <a href="https://yingchen001.github.io/">Yingchen Yu</a><sup>3,✉</sup>,
-                            </span>
-                            <span class="author-block">
-                                <a href="https://linyiheng123.github.io/">Yiheng Lin</a><sup>2,*</sup>,
-                            </span>
-                            <br>
-                            <span class="author-block">
-                                <a href="https://arctanxarc.github.io/">Ruichuan An</a><sup>1</sup>,
-                            </span>
-                            <span class="author-block">
-                                <a href="https://lu-m13.github.io/">Ming Lu</a><sup>1</sup>,
-                            </span>
-                            <!-- <br> -->
-                            <span class="author-block">
-                                <a href="https://qi-she.net/">Qi She</a><sup>2,†</sup>,
-                            </span>
-                            <span class="author-block">
-                                <a href="https://zwt233.github.io/">Wentao Zhang</a><sup>1,✉</sup>
-                            </span>
-                        </div>
-                        <!-- <br> -->
-                        <!-- <div class="is-size-5 publication-authors">
-                            <span class="author-block"><b>CVPR 2026 (Main Track), Denver</b>
-                        </div> -->
-                        <!-- <br> -->
-                        <div class="is-size-5 publication-authors">
-                            <span class="author-block"><sup>1</sup>Peking University</span>&nbsp;&nbsp;
-                            <span class="author-block"><sup>2</sup>ByteDance (CN)</span>&nbsp;&nbsp;
-                            <span class="author-block"><sup>3</sup>ByteDance (SG)</span>
-                            <br>
+        <div class="container">
+            <p class="publication-eyebrow"><span class="eyebrow-venue">NeurIPS 2026</span></p>
+            <h1 class="publication-title"><span class="title-accent">SteerVTE</span>: Seamless Video Text Editing with
+                Style and Glyph Control</h1>
 
-                            <span class="author-block"><sup>*</sup>Intern of
-                                ByteDance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span class="author-block"><sup>†</sup>Project
-                                Leader</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <span class="author-block"><sup>✉</sup>Corresponding Author</span>
-                        </div>
+            <div class="publication-authors">
+                <span class="author-block">
+                    <a href="https://openreview.net/profile?id=%7EKai_Zeng7">Kai Zeng</a><sup>1,2,*</sup>,
+                </span>
+                <span class="author-block">
+                    <a href="https://moranli-aca.github.io/">Moran Li</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                    <a href="https://scholar.google.com/citations?user=TaYR7cMAAAAJ&hl=en">Zhengwei Wang</a><sup>2</sup>,
+                </span>
+                <span class="author-block">
+                    <a href="https://yingchen001.github.io/">Yingchen Yu</a><sup>3,✉</sup>,
+                </span>
+                <span class="author-block">
+                    <a href="https://linyiheng123.github.io/">Yiheng Lin</a><sup>2,*</sup>,
+                </span>
+                <br>
+                <span class="author-block">
+                    <a href="https://arctanxarc.github.io/">Ruichuan An</a><sup>1</sup>,
+                </span>
+                <span class="author-block">
+                    <a href="https://lu-m13.github.io/">Ming Lu</a><sup>1</sup>,
+                </span>
+                <span class="author-block">
+                    <a href="https://qi-she.net/">Qi She</a><sup>2,†</sup>,
+                </span>
+                <span class="author-block">
+                    <a href="https://zwt233.github.io/">Wentao Zhang</a><sup>1,✉</sup>
+                </span>
+            </div>
 
-                        <div class="column has-text-centered">
-                            <div class="publication-links">
-                                <!-- PDF Link. -->
-                                <span class="link-block">
-                                    <a href="https://arxiv.org/abs/2606.23254"
-                                        class="external-link button is-normal is-rounded is-dark">
-                                        <span class="icon">
-                                            <i class="ai ai-arxiv"></i>
-                                        </span>
-                                        <span>Paper</span>
-                                    </a>
-                                </span>
-                                <!-- Code Link. -->
-                                <span class="link-block">
-                                    <a href="https://github.com/zengkaiya/SteerVTE"
-                                        class="external-link button is-normal is-rounded is-dark">
-                                        <span class="icon">
-                                            <i class="fab fa-github"></i>
-                                        </span>
-                                        <span>Code</span>
-                                    </a>
-                                </span>
-                                <!-- RL Dataset Link. -->
-                                <!-- <span class="link-block">
-                                    <a href="https://huggingface.co/datasets/Peterwatwec/CodeDance-RL" target="_blank"
-                                        class="external-link button is-normal is-rounded is-dark">
-                                        <span class="icon"><i class="fas fa-database"></i></span>
-                                        <span>RL Dataset</span>
-                                    </a>
-                                </span> -->
-                                <!-- Models Link. -->
-                                <span class="link-block">
-                                    <a href="https://huggingface.co/MewtwoX23/SteerVTE/tree/main" target="_blank"
-                                        class="external-link button is-normal is-rounded is-dark">
-                                        <span class="icon"><i class="fas fa-cubes"></i></span>
-                                        <span>Model</span>
-                                    </a>
-                                </span>
-                                 <!-- SFT Dataset Link. -->
-                                <span class="link-block">
-                                    <a href="https://huggingface.co/datasets/MewtwoX23/VTE-Bench" target="_blank"
-                                        class="external-link button is-normal is-rounded is-dark">
-                                        <span class="icon"><i class="fas fa-database"></i></span>
-                                        <span>Benchmark</span>
-                                    </a>
-                                </span>
-                                <!-- Demo Link. -->
-                                <!-- <span class="link-block">
-                                    <a href="https://codedance-vl.github.io/" target="_blank"
-                                        class="external-link button is-normal is-rounded is-dark">
-                                        <span class="icon"><i class="fas fa-play-circle"></i></span>
-                                        <span>Demo</span>
-                                    </a>
-                                </span> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="publication-affiliations">
+                <span class="author-block"><sup>1</sup>Peking University</span>&nbsp;&nbsp;·&nbsp;&nbsp;<span
+                    class="author-block"><sup>2</sup>ByteDance (CN)</span>&nbsp;&nbsp;·&nbsp;&nbsp;<span
+                    class="author-block"><sup>3</sup>ByteDance (SG)</span>
+            </div>
+            <div class="publication-notes">
+                <sup>*</sup>Intern of ByteDance&nbsp;&nbsp;&nbsp;<sup>†</sup>Project
+                Leader&nbsp;&nbsp;&nbsp;<sup>✉</sup>Corresponding Author
+            </div>
+
+            <div class="publication-links">
+                <a href="https://arxiv.org/abs/2606.23254" class="pub-btn pub-btn-primary">
+                    <i class="ai ai-arxiv"></i>
+                    <span>Paper</span>
+                </a>
+                <a href="https://github.com/zengkaiya/SteerVTE" class="pub-btn">
+                    <i class="fab fa-github"></i>
+                    <span>Code</span>
+                </a>
+                <a href="https://huggingface.co/MewtwoX23/SteerVTE/tree/main" target="_blank" class="pub-btn">
+                    <i class="fas fa-cubes"></i>
+                    <span>Model</span>
+                </a>
+                <a href="https://huggingface.co/datasets/MewtwoX23/VTE-Bench" target="_blank" class="pub-btn">
+                    <i class="fas fa-database"></i>
+                    <span>Benchmark</span>
+                </a>
             </div>
         </div>
     </section>
 
     <section id="abstract">
         <div class="container">
-            <h2>Abstract</h2>
+            <header class="section-head">
+                <span class="section-index">01</span>
+                <h2>Abstract</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </header>
             <div class="abstract-content">
                 <p>
                     Visual text editing aims to precisely modify text in images and videos while preserving stylistic
@@ -198,7 +146,11 @@
 
     <section id="method">
         <div class="container">
-            <h2>Methodology</h2>
+            <header class="section-head">
+                <span class="section-index">02</span>
+                <h2>Methodology</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </header>
 
             <div class="method-section">
                 <h3>Architecture Design</h3>
@@ -263,19 +215,23 @@
 
     <section id="comparisons">
         <div class="container">
-            <h2 style="margin-bottom: 60px;">Qualitative Comparison</h2>
+            <header class="section-head">
+                <span class="section-index">03</span>
+                <h2>Qualitative Comparison</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </header>
             <p class="subsection-description">
-                Please press the play button on the top right to pause all videos for more detailed frame-by-frame
-                comparison.<br>
-                Please refresh the page if the videos are not synchronized properly.<br>
-                <span class="zoom-tip">Tip: Click any image or video to zoom in.</span>
+                Press the pause button on any card to pause all videos for frame-by-frame comparison · Refresh the page
+                if the videos drift out of sync
+                <br>
+                <span class="zoom-tip">Click any image or video to zoom in</span>
             </p>
 
             <div class="subsection">
                 <div class="subsection scene-text-subsection">
-                <h3 id="scene-text-scenarios">Video Text Editing in <span style="color: red; font-weight: bold;">Scene Text</span> Scenarios</h3>
+                <h3 id="scene-text-scenarios">Video Text Editing in <span class="accent-serif">Scene Text</span> Scenarios</h3>
                 <h4>Moving</h4>
-                <p class="subsection-description" style="margin-top: -12px;">Note: STRIVE* is our reproduced implementation of STRIVE.</p>
+                <p class="method-note">STRIVE* denotes our reproduced implementation of STRIVE.</p>
                 <!-- <div class="comparison-block">
                     <div class="instruction-label">
                         <span class="instruction-badge">Edit: <span class="instruction-src">&quot;CLEAN&quot;</span> -&gt; <span class="instruction-gt">&quot;sween&quot;</span></span>
@@ -1669,9 +1625,13 @@
     </section>
     <section id="dataset-visualization">
         <div class="container">
-            <h2 style="margin-bottom: 60px;">Dataset Visualization</h2>
+            <header class="section-head">
+                <span class="section-index">04</span>
+                <h2>Dataset Visualization</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </header>
             <div class="subsection dataset-stage dataset-stage1">
-                <h3 id="stage1-training">Stage1 Training Data: SynthTE-Easy</h3>
+                <h3 id="stage1-training" data-stage="Stage 01">Stage1 Training Data: SynthTE-Easy</h3>
                 <div class="dataset-grid">
                     <div class="dataset-sample">
                         <div class="instruction-label">
@@ -1941,7 +1901,7 @@
             </div>
             <hr class="subsection-divider">
             <div class="subsection dataset-stage dataset-stage2">
-                <h3 id="stage2-training">Stage2 Training: RealTE</h3>
+                <h3 id="stage2-training" data-stage="Stage 02">Stage2 Training: RealTE</h3>
                 <div class="dataset-grid">
                     <!-- <div class="dataset-sample">
                         <div class="instruction-label">
@@ -2211,7 +2171,7 @@
             </div>
             <hr class="subsection-divider">
             <div class="subsection dataset-stage dataset-stage3">
-                <h3 id="stage3-training">Stage3 Training Data: SynthTE-Hard</h3>
+                <h3 id="stage3-training" data-stage="Stage 03">Stage3 Training Data: SynthTE-Hard</h3>
                 <div class="dataset-grid">
                     <div class="dataset-sample">
                         <div class="instruction-label">
@@ -2351,8 +2311,13 @@
     </section>
     <section id="citation">
         <div class="container">
-            <h2>Citation</h2>
+            <header class="section-head">
+                <span class="section-index">05</span>
+                <h2>Citation</h2>
+                <span class="section-rule" aria-hidden="true"></span>
+            </header>
             <div class="bibtex-box">
+                <span class="bibtex-label">BibTeX</span>
                 <button class="citation-copy-btn" type="button" aria-label="Copy citation">Copy</button>
                 <pre><code id="citation-bibtex">@article{zeng2026steervte,
   title={SteerVTE: Seamless Video Text Editing with Style and Glyph Control},
@@ -2364,7 +2329,13 @@
         </div>
     </section>
 
-    <footer style="padding: 60px 0;"></footer>
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <span class="footer-brand">SteerVTE<span class="brand-dot"> · </span>Seamless Video Text Editing</span>
+            <span class="footer-meta">Peking University · ByteDance</span>
+            <span class="footer-meta">© 2026 · NeurIPS · arXiv:2606.23254</span>
+        </div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -2605,6 +2576,26 @@
                         }, 1200);
                     }
                 });
+            }
+
+            // 6. Scroll-reveal animations
+            const revealTargets = document.querySelectorAll(
+                '.section-head, .abstract-content, .method-section, .comparison-block, .dataset-sample, .bibtex-box'
+            );
+
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                revealTargets.forEach((el) => el.classList.add('revealed'));
+            } else {
+                revealTargets.forEach((el) => el.classList.add('reveal'));
+                const revealObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                            revealObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.06, rootMargin: '0px 0px -32px 0px' });
+                revealTargets.forEach((el) => revealObserver.observe(el));
             }
 
             window.addEventListener('scroll', updateNavActive, { passive: true });
